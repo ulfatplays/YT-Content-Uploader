@@ -3,7 +3,7 @@ name: YouTube Auto Upload
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */12 * * *"  # Runs every 12 hours
+    - cron: "30 */12 * * *"  # Runs every 12 hours
 
 jobs:
   upload:
