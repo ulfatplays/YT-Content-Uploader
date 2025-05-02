@@ -1,4 +1,4 @@
-name: YouTube Auto Upload
+name: youtube_upload
 
 on:
   workflow_dispatch:
