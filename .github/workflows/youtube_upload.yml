@@ -1,0 +1,32 @@
+name: Upload to YouTube
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *'  # Runs every 12 hours
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client google-drive-downloader
+
+    - name: Run uploader
+      env:
+        YOUTUBE_CLIENT_SECRET_JSON: ${{ secrets.YOUTUBE_CLIENT_SECRET_JSON }}
+        GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+      run: |
+        echo "$YOUTUBE_CLIENT_SECRET_JSON" > oauth2.json
+        python upload_to_youtube.py
